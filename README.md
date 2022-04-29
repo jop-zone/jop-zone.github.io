@@ -1,2 +1,2 @@
 # jop-zone.github.io
-<!-- ligma balls -->
+ligma balls
