@@ -1,58 +1,113 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
+  <style>
+    .sidenav {
+      width: 180px;
+      position: absolute;
+      z-index: 1;
+      top: 20px;
+      left: 10px;
+      background: #eee;
+      overflow-x: hidden;
+      padding: 8px 0;
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+    }
 
-.sidenav {
-  width: 180px;
-  position: fixed;
-  z-index: 1;
-  top: 20px;
-  left: 10px;
-  background: #eee;
-  overflow-x: hidden;
-  padding: 8px 0;
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
-}
+    .sidenav a {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 25px;
+      color: red;
+      display: block;
+    }
 
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: red;
-  display: block;
-}
+    .sidenav a:hover {
+      color: cyan;
+    }
 
-.sidenav a:hover {
-  color: cyan;
-}
+    .main {
+      margin-left: 140px;
+      /* Same width as the sidebar + left position in px */
+      font-size: 28px;
+      /* Increased text to enable scrolling */
+      padding: 0px 10px;
+    }
 
-.main {
-  margin-left: 140px; /* Same width as the sidebar + left position in px */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
+    @media screen and (max-height: 450px) {
+      .sidenav {
+        padding-top: 15px;
+      }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+      .sidenav a {
+        font-size: 18px;
+      }
+    }
+  </style>
 </head>
 
 <body style="background-color: #000;">
-  <div class="sidenav">
+  <div id="main-sidenav" class="sidenav">
     <a href="https://jop.zone/snake">snake</a>
     <a href="https://jop.zone/triangle">triangle</a>
     <a href="https://jop.zone/slutbox9000">slutbox9000</a>
-    <img src="https://c.tenor.com/-wrmUJrUbeoAAAAC/emoji-disintergrating.gif" width="120px" height="100px" style="margin: 0 auto; display: block">
+    <img src="https://c.tenor.com/-wrmUJrUbeoAAAAC/emoji-disintergrating.gif" width="120px" height="100px"
+      style="margin: 0 auto; display: block">
   </div>
-  
-  <div class="main">
-    <iframe style="margin: 0 auto; display: block" width="560" height="315" src="https://www.youtube.com/embed/pAnK1y7qjuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <img src="https://web.archive.org/web/20090831092929/http://geocities.com/shanelaffond13/gamingfirelogo.gif" style="margin: 0 auto; display: block"/>
-    <p style="color:white;text-align:center">SPIDER MAN</p>
-    <img src="https://i.kym-cdn.com/photos/images/newsfeed/000/059/601/spiderman116_spideydancing1.gif" style="margin: 0 auto; display: block">
-  </div>  
 
-  <a href="https://paypal.me/sarahelliott23"><img src="https://web.archive.org/web/20091025113553if_/http://www.geocities.com/onthedesktop/blank_critter5_kjc.gif"></a>
+  <div class="main">
+    <iframe style="margin: 0 auto; display: block" width="560" height="315"
+      src="https://www.youtube.com/embed/pAnK1y7qjuE" title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+    <img src="https://web.archive.org/web/20090831092929/http://geocities.com/shanelaffond13/gamingfirelogo.gif"
+      style="margin: 0 auto; display: block" />
+    <p style="color:white;text-align:center">SPIDER MAN</p>
+    <img src="https://i.kym-cdn.com/photos/images/newsfeed/000/059/601/spiderman116_spideydancing1.gif"
+      style="margin: 0 auto; display: block">
+  </div>
+
+  <a href="https://paypal.me/sarahelliott23"><img
+      src="https://web.archive.org/web/20091025113553if_/http://www.geocities.com/onthedesktop/blank_critter5_kjc.gif"></a>
 </body>
+
+<script>
+  // DRAGGABLE SIDENAV
+  dragElement(document.getElementById("main-sidenav"));
+
+  function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    if (document.getElementById(elmnt.id)) {
+      elmnt.onmousedown = dragMouseDown;
+    }
+
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      // call a function whenever the cursor moves:
+      document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      // calculate the new cursor position:
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      // set the element's new position:
+      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+      // stop moving when mouse button is released:
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  }
+</script>
